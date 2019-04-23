@@ -1,13 +1,18 @@
 <html>
+
 <head>
 
 </head>
+
 <body>
     <h1>Firebase test</h1>
-    <h1 id = "fireheading"></h1>
-    <textarea id = "title" placeholder = "enter title here"></textarea>
-    <textarea id = "description" placeholder = "enter text here"></textarea>
-    <button id = "submit" onclick = "submitclick()">Submit</button>
+    <h2>Make sure pop ups are not blocked</h2>
+    <h2 id="name">Name</h2>
+    <h1 id="fireheading"></h1>
+    <textarea id="title" placeholder="enter title here"></textarea>
+    <textarea id="description" placeholder="enter text here"></textarea>
+    <button id="submit" onclick="submitclick()">Submit</button>
+    <button id="sign-in" onclick="google_signin()">Sign in</button>
 
 
 
@@ -17,20 +22,22 @@
 
 
 
-   
+
+
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
     <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCnAl7qhx2Q-4EUGGJ9PEaWF5I3So8Gjck",
-        authDomain: "twitter-mockup.firebaseapp.com",
-        databaseURL: "https://twitter-mockup.firebaseio.com",
-        projectId: "twitter-mockup",
-        storageBucket: "twitter-mockup.appspot.com",
-        messagingSenderId: "465271962236"
-    };
-    firebase.initializeApp(config);
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCnAl7qhx2Q-4EUGGJ9PEaWF5I3So8Gjck",
+            authDomain: "twitter-mockup.firebaseapp.com",
+            databaseURL: "https://twitter-mockup.firebaseio.com",
+            projectId: "twitter-mockup",
+            storageBucket: "twitter-mockup.appspot.com",
+            messagingSenderId: "465271962236"
+        };
+        firebase.initializeApp(config);
     </script>
-    <script src = "script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

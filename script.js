@@ -1,4 +1,9 @@
-window.onload = function () {
+window.onload = google_signin;
+
+
+
+
+function google_signin() {
 	var provider = new firebase.auth.GoogleAuthProvider();
 	//provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
 
@@ -7,8 +12,10 @@ window.onload = function () {
 		if (result.credential) {
 			// This gives you a Google Access Token. You can use it to access the Google API.
 			var token = result.credential.accessToken;
+
 			// ...
 		}
+
 		var fireheading = document.getElementById("fireheading");
 		var firebaseheadingref = firebase.database().ref().child("posts");
 		firebaseheadingref.on("value", function (datasnapshot) {
@@ -40,8 +47,6 @@ window.onload = function () {
 	});
 
 }
-
-
 var description = document.getElementById("description");
 var title = document.getElementById("title");
 var submitbtn = document.getElementById("submit");
