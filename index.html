@@ -7,13 +7,20 @@
 
 <body>
     <h1>Firebase test</h1>
-    <h2>Make sure pop ups are not blocked</h2>
+    <h2>Make sure pop ups are not blocked</h2><button id="sign-in" onclick="google_signin()">Sign in</button>
+    <div id="user_read">
+        <p id="fireheading"></p>
+    </div>
 
-    <h1 id="fireheading"></h1>
-    <textarea id="title" placeholder="enter title here"></textarea>
-    <textarea id="description" placeholder="enter text here"></textarea>
-    <button id="submit" onclick="submitclick()">Submit</button>
-    <button id="sign-in" onclick="google_signin()">Sign in</button>
+    <div id="user_add">
+        <input type="text" class="user_input" id="title" placeholder="enter title here">
+        <br>
+        <input type="text" class="user_input" id="description" placeholder="enter text here">
+        <br>
+        <br>
+        <button id="submit" onclick="submitclick()">Submit</button>
+
+    </div>
 
 
 
