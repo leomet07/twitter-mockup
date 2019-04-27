@@ -1,20 +1,40 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #ffc194;
 }
 
-.user_input{
-    background-color: white;
-    color:black;
-    border: 1px solid black;
-    width: 75%;
-    height: 200px;
-    font-size: 25px;
+.user_input {
+	text-align: center;
+	background-color: white;
+	color: black;
+	border: 1px solid black;
+	width: 75%;
+	height: 165px;
+	font-size: 25px;
+	outline-width: 0;
+	margin-bottom: 10px;
+	border-radius: 3px;
+	background-color: #e5f2ff;
 }
-#user_add{
-    margin-bottom: 10px;
+#user_add {
 }
-button{
-    border:1px solid black;
-    font-size: 25px;
+
+button {
+	border: 1px solid black;
+	font-size: 25px;
+	background-color: #5499c7;
+	border-radius: 2px;
+}
+#submit {
+}
+button:focus {
+}
+#heading {
+	text-align: center;
+}
+
+#text_boxes {
+	text-align: center;
 }
