@@ -49,10 +49,10 @@ signupForm.addEventListener("submit", (e) => {
 		console.log(cred.user);
 		allow = true;
 		isverified = cred.user.emailVerified;
-		if (cred.user.emailVerified == false) {
-			document.getElementById("verify").innerHTML = "You cannot work until account is verified.Check your email";
-			firebase.auth().currentUser.sendEmailVerification();
-		}
+		console.log("verify on sign up");
+		document.getElementById("verify").innerHTML = "You cannot work until account is verified.Check your email";
+		firebase.auth().currentUser.sendEmailVerification();
+		
 		var firebaseheadingref = firebase.database().ref().child("posts");
 		firebaseheadingref.on("value", function(datasnapshot) {
 			console.log("her1e");
