@@ -2,7 +2,10 @@
 //window.onload = google_signin;
 var allow = false;
 var fireheading = document.getElementById("fireheading");
-
+var isverified;
+var global_user;
+//making current user global
+var save_currentUser;
 function google_signin() {
 	var provider = new firebase.auth.GoogleAuthProvider();
 	//provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -11,6 +14,8 @@ function google_signin() {
 		.auth()
 		.signInWithPopup(provider)
 		.then(function(result) {
+			//if signed in with google then remove option to sign in with google again.SO you would have to sign out.
+			google_sign_in_button.style.display = "none";
 			console.log("sucsess");
 			//to stop onload instant access
 			allow = true;
@@ -21,18 +26,26 @@ function google_signin() {
 
 				// ...
 			}
+
 			var user = firebase.auth().currentUser;
+			global_user = user;
 			console.log(user);
 			console.log(user.displayName);
+
+			//mmaking google users have a email as their username
+			current_user_name = user.email;
+			//adding a username to userlist
+			console.log("hi");
+			firebase.database().ref().child("users").child(global_user.uid).set({
+				user_name: current_user_name
+			});
 			//a global var bc otherwise it connot be read from other functions.
 			window.name = user.displayName;
-
-			if (allow) {
-				var firebaseheadingref = firebase.database().ref().child("posts");
-				firebaseheadingref.on("value", function(datasnapshot) {
-					read(datasnapshot);
-				});
-			}
+			isverified = user.emailVerified;
+			var firebaseheadingref = firebase.database().ref().child("posts");
+			firebaseheadingref.on("value", function(datasnapshot) {
+				read(datasnapshot);
+			});
 		})
 		.catch(function(error) {
 			//a global var so other functions can acsess this
@@ -53,41 +66,31 @@ var description = document.getElementById("description");
 var title = document.getElementById("title");
 var submitbtn = document.getElementById("submit");
 
-function read(datasnapshot) {
-	if (allow) {
-		var entries = Object.entries(datasnapshot.val());
-		console.log(JSON.stringify(datasnapshot.val()));
-		for (i = 0; i < entries.length; i++) {
-			console.log("here");
-			var current_entry = entries[i];
-			console.log(current_entry);
-			for (j = 0; j < current_entry.length; j++) {
-				if (i == 0) {
-					if (j != 0) {
-						fireheading.innerHTML = JSON.stringify(current_entry[j]) + "<br>";
-					}
-				} else {
-					if (j != 0) {
-						fireheading.innerHTML += JSON.stringify(current_entry[j]) + "<br>";
-					}
-				}
-			}
-		}
-	}
-}
 function submitclick() {
-	if (allow) {
+	//writing is not allowed when not verified
+	if (allow && isverified) {
 		//adding data
 		var firebaseRef = firebase.database().ref().child("posts");
 		var messagetext = description.value;
 		var titletext = title.value;
 
+		//since writing is only when u r signed in,you can use the uid to access the username
+		function getusername() {}
+
+		console.log("here");
 		//making a new child everytime
 		firebaseRef.push().set({
-			name: window.name,
+			user_name: current_user_name,
+			name: global_user.displayName,
 			title: titletext,
-			desc: messagetext
+			desc: messagetext,
+			uid: global_user.uid,
+			likes: { amount: 0, users: { placeholder: "placeholderid" } }
 		});
+
+		document.getElementById("title").value = "";
+		document.getElementById("description").value = "";
+		//uid is posted to add user link
 
 		//resseting the values
 		//titletext = "";

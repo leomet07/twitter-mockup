@@ -3,8 +3,15 @@
 body {
 	font-family: 'Roboto', sans-serif;
 	background-color: #ffc194;
+	margin-left: 1%;
 }
 
+.h1 {
+	font-size: 35px;
+}
+.h2 {
+	font-size: 28px;
+}
 .user_input {
 	text-align: center;
 	background-color: white;
@@ -18,18 +25,55 @@ body {
 	border-radius: 3px;
 	background-color: #e5f2ff;
 }
-#user_add {
+::placeholder {
+	color: black;
+	opacity: 1; /* Firefox */
 }
 
-button {
+:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: black;
+}
+
+::-ms-input-placeholder {
+	/* Microsoft Edge */
+	color: black;
+}
+#user_add {
+	display: none;
+}
+#user_read {
+	display: none;
+	overflow: scroll;
+	height: 400px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	margin-bottom: 1%;
+}
+.button {
 	border: 1px solid black;
 	font-size: 25px;
 	background-color: #5499c7;
 	border-radius: 2px;
+	margin-bottom: 2px;
+}
+
+.likebutton {
+	border: 1px solid black;
+	font-size: 10px;
+	background-color: #5499c7;
+	border-radius: 2px;
 }
 #submit {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	transition-duration: 200ms;
 }
-button:focus {
+
+#submit:hover {
+	background-color: gold;
+}
+.button:focus {
 }
 #heading {
 	text-align: center;
@@ -37,4 +81,16 @@ button:focus {
 
 #text_boxes {
 	text-align: center;
+}
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+	padding: 0 15px;
+	background-color: #dc7633;
+	display: none;
+	overflow: hidden;
+	float: inherit;
+}
+
+nav {
+	border: 0.5px solid black;
 }
