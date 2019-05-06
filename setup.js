@@ -72,15 +72,18 @@ function add(i) {
 		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current).set(global_user.uid);
 		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("amount").set(current_likes);
 	} else if (has_liked) {
-		current_likes = current_likes - 1;
-		//.removeValue();
-		console.log(key_of_current);
+		
 		if (key_of_current === undefined) {
+			console.log(key_of_current);
 			key_of_current = current_users_liked[current_slot][0];
+			current_likes = current_likes - 1;
+			firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current).remove();
+			firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("amount").set(current_likes);
+			//.removeValue();
+			
 			//liked before page is loaded
 			//means like must be retrieved in a different way
 		}
-		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current).remove();
-		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("amount").set(current_likes);
+		
 	}
 }
