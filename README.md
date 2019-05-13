@@ -1,2 +1,2 @@
 # twitter-mockup
-twitter-mockup with firebase,js,and google matrial theme.
+twitter-mockup with firebase, and js
