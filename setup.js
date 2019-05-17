@@ -4,10 +4,10 @@ var google_sign_in_button = document.querySelector("#google-sign-in");
 //making the cirrent like key a global var
 var key_of_current_for_followers;
 
-//making the cirrent slot a global var
+ //making the cirrent slot a global var
 var current_slot_for_followers;
 
-//making the username a global var
+ //making the username a global var
 var current_user_name;
 //makig entries a global var
 var entries;
@@ -21,13 +21,13 @@ function read(datasnapshot) {
 		for (i = 0; i < entries.length; i++) {
 			var current_entry = entries[i];
 
-			for (j = 0; j < current_entry.length; j++) {
+ 			for (j = 0; j < current_entry.length; j++) {
 				let tweettobedisplayed = current_entry[j];
 
-				if (i == 0) {
+ 				if (i == 0) {
 					console.log("here");
 
-					if (j != 0) {
+ 					if (j != 0) {
 						tweet_container.innerHTML =
 							`<div class = "tweet">` +
 							`<p class = "username">@` +
@@ -111,13 +111,13 @@ function read(datasnapshot) {
 	}
 }
 
-function add(i) {
+ function add(i) {
 	//j is not needed since we willnever access anything other than index 1 of the nested list
 	//getting like amount
 	let current_likes = entries[i][1].likes.amount;
 	//adding data only if it hasnt been liked before
 
-	let current_users_liked = Object.entries(entries[i][1].likes.users);
+ 	let current_users_liked = Object.entries(entries[i][1].likes.users);
 	let has_liked = false;
 	for (x = 0; x < current_users_liked.length; x++) {
 		//only checkibg second slot bc only  uid is needed
@@ -128,11 +128,11 @@ function add(i) {
 		}
 	}
 
-	//if has not been liked oreviously
+ 	//if has not been liked oreviously
 	if (!has_liked) {
 		//current entry/post
 
-		//increasing like amount
+ 		//increasing like amount
 		current_likes++;
 		key_of_current_for_followers = firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").push().getKey();
 		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current_for_followers).set(global_user.uid);
@@ -151,12 +151,12 @@ function add(i) {
 	}
 }
 
-//submit btn
+ //submit btn
 var description = document.getElementById("description");
 var title = document.getElementById("title");
 var submitbtn = document.getElementById("submit");
 
-function submitclick() {
+ function submitclick() {
 	//writing is not allowed when not verified
 	if (allow && isverified) {
 		//adding data
@@ -164,7 +164,7 @@ function submitclick() {
 		var messagetext = description.value;
 		var titletext = title.value;
 
-		//making a new child everytime
+ 		//making a new child everytime
 		if (messagetext != "" && titletext != "") {
 			console.log("here");
 			firebaseRef.push().set({
@@ -177,27 +177,27 @@ function submitclick() {
 			});
 		}
 
-		document.getElementById("title").value = "";
+ 		document.getElementById("title").value = "";
 		document.getElementById("description").value = "";
 		//uid is posted to add user link
 
-		//resseting the values
+ 		//resseting the values
 		//titletext = "";
 	}
 }
 
-window.onkeyup = async function(e) {
+ window.onkeyup = async function(e) {
 	//username availibilty checker
 	//let used so it cannt be acceswd in anyother part
 
-	let username_form = document.getElementById("signup-username");
+ 	let username_form = document.getElementById("signup-username");
 
-	let user_name_value = username_form.value;
+ 	let user_name_value = username_form.value;
 	//console.log(user_name_value);
 	//access a seaperate main child with only usernames for fasetr querings
 	let firebaseheadingref = firebase.database().ref().child("usernames");
 
-	await firebaseheadingref.on("value", function(datasnapshot) {
+ 	await firebaseheadingref.on("value", function(datasnapshot) {
 		//console.log("here");
 		//console.log(datasnapshot.val());
 		let the_usernames = Object.entries(datasnapshot.val());
@@ -238,16 +238,16 @@ function follow(i) {
 	let current_slot_for_following;
 	let key_of_current_for_following;
 
-	//other persons uid
+ 	//other persons uid
 	other_uid = entries[i][1].uid;
 	//console.log(other_uid);
 
-	//current_users_followers
+ 	//current_users_followers
 	//console.log(snapshot);
 	//current_followers_amount = snapshot[global_user.uid].follow.followers.amount;
 	//current_followers = Object.entries(snapshot[global_user.uid].follow.followers.follow_users);
 
-	other_users_follower_amount = snapshot[other_uid].follow.followers.amount;
+ 	other_users_follower_amount = snapshot[other_uid].follow.followers.amount;
 	other_current_followers = Object.entries(snapshot[other_uid].follow.followers.follow_users);
 	other_users_following_amount = snapshot[global_user.uid].follow.following.amount;
 	other_current_following = Object.entries(snapshot[global_user.uid].follow.following.follow_users);
@@ -256,7 +256,7 @@ function follow(i) {
 	firebase.database().ref().child("users").off();
 	let has_been_followed = false;
 
-	for (let j = 0; j < other_current_followers.length; j++) {
+ 	for (let j = 0; j < other_current_followers.length; j++) {
 		//console.log(other_current_followers[j][1]);
 		if (global_user.uid == other_current_followers[j][1]) {
 			console.log("comparsion successful");
@@ -265,7 +265,7 @@ function follow(i) {
 		}
 	}
 
-	//second for loop only for current slot since follow status has already been determined
+ 	//second for loop only for current slot since follow status has already been determined
 	for (let z = 0; z < other_current_following.length; z++) {
 		console.log(other_current_following[z][1]);
 		if (other_uid == other_current_following[z][1]) {
@@ -274,25 +274,25 @@ function follow(i) {
 		}
 	}
 
-	if (!has_been_followed) {
+ 	if (!has_been_followed) {
 		//current entry/post
 
-		//increasing like amount
+ 		//increasing like amount
 
-		other_users_follower_amount = Number(other_users_follower_amount) + 1;
+ 		other_users_follower_amount = Number(other_users_follower_amount) + 1;
 		other_users_following_amount = Number(other_users_following_amount) + 1;
 
-		//console.log(other_uid);
+ 		//console.log(other_uid);
 		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("amount").set(other_users_follower_amount);
 		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("amount").set(other_users_following_amount);
 
-		key_of_current_for_followers = firebase.database().ref().child("users").child(other_uid).child("likes").child("users").push().getKey();
+ 		key_of_current_for_followers = firebase.database().ref().child("users").child(other_uid).child("likes").child("users").push().getKey();
 		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("follow_users").child(key_of_current_for_followers).set(global_user.uid);
 
-		key_of_current_for_following = firebase.database().ref().child("users").child(global_user.uid).child("likes").child("users").push().getKey();
+ 		key_of_current_for_following = firebase.database().ref().child("users").child(global_user.uid).child("likes").child("users").push().getKey();
 		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_followers).set(other_uid);
 
-		console.log("follow completed");
+ 		console.log("follow completed");
 	} else if (has_been_followed) {
 		other_users_follower_amount = Number(other_users_follower_amount) - 1;
 		other_users_following_amount = Number(other_users_following_amount) - 1;
@@ -305,10 +305,10 @@ function follow(i) {
 			//means like must be retrieved in a different way
 		}
 
-		if (key_of_current_for_following === undefined) {
+ 		if (key_of_current_for_following === undefined) {
 			console.log(other_current_following);
 
-			key_of_current_for_following = other_current_following[current_slot_for_following][0];
+ 			key_of_current_for_following = other_current_following[current_slot_for_following][0];
 			console.log(key_of_current_for_following);
 			//liked before page is loaded
 			//means like must be retrieved in a different way
@@ -318,22 +318,16 @@ function follow(i) {
 		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("amount").set(other_users_follower_amount);
 		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("follow_users").child(key_of_current_for_followers).remove();
 
-		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_following).remove();
+ 		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_following).remove();
 		console.log("unfollow completed");
 	}
 	//once is used to not make another event lister
-	firebase.database().ref().child("posts").once("value", function(datasnapshot) {
-		read(datasnapshot);
-		//listener is separate so it doesnt affect anything else
-	});
-	
-	//make another event lister
 	firebase.database().ref().child("posts").on("value", function(datasnapshot) {
 		read(datasnapshot);
 		//listener is separate so it doesnt affect anything else
 	});
 
-	firebase.database().ref().child("users").on("value", function(datasnapshot) {
+ 	firebase.database().ref().child("users").on("value", function(datasnapshot) {
 		//console.log(datasnapshot.val());
 		snapshot = datasnapshot.val();
 		//console.log(snapshot);
@@ -341,9 +335,9 @@ function follow(i) {
 	});
 }
 
-function login() {}
+ function login() {}
 
-//the two buttons shown on page load
+ //the two buttons shown on page load
 var loginbtn = document.querySelector("#togglelogin");
 var signupbtn = document.querySelector("#tooglesignup");
 window.onload = function() {
@@ -355,7 +349,7 @@ window.onload = function() {
 			//this = current button
 			this.classList.toggle("active");
 
-			//only toggles the div that is right after the button,so include everythingin 1 div(div has to be right after button in html)
+ 			//only toggles the div that is right after the button,so include everythingin 1 div(div has to be right after button in html)
 			var panel = this.nextElementSibling;
 			if (panel.style.display === "block") {
 				panel.style.display = "none";
@@ -363,7 +357,7 @@ window.onload = function() {
 				panel.style.display = "block";
 			}
 
-			//once cllicked/selected remove option/other button
+ 			//once cllicked/selected remove option/other button
 			if (this.id == "togglelogin") {
 				//if paneil is shown AFTER click remove other btns
 				if (panel.style.display == "block") {
