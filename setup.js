@@ -322,6 +322,12 @@ function follow(i) {
 		console.log("unfollow completed");
 	}
 	//once is used to not make another event lister
+	firebase.database().ref().child("posts").once("value", function(datasnapshot) {
+		read(datasnapshot);
+		//listener is separate so it doesnt affect anything else
+	});
+	
+	//make another event lister
 	firebase.database().ref().child("posts").on("value", function(datasnapshot) {
 		read(datasnapshot);
 		//listener is separate so it doesnt affect anything else
