@@ -269,11 +269,12 @@ function follow(i) {
 	//once data has been recieved turn listener off
 	//sfirebase.database().ref().child("users").off();
 	let has_been_followed = false;
-	if (!(other_users_follower_amount <= 0) && !(other_users_following_amount <= 0)) {
+	console.log(other_users_follower_amount, other_users_following_amount);
+	if (other_users_follower_amount >= 0 && other_users_following_amount >= 0) {
 		//to prevent the negitive glitch
 		console.log("folow boi");
 		for (let j = 0; j < other_current_followers.length; j++) {
-			//console.log(other_current_followers[j][1]);
+			console.log(other_current_followers[j][1]);
 			if (global_user.uid == other_current_followers[j][1]) {
 				console.log("comparsion successful");
 				current_slot_for_followers = j;
@@ -283,13 +284,13 @@ function follow(i) {
 
 		//second for loop only for current slot since follow status has already been determined
 		for (let z = 0; z < other_current_following.length; z++) {
-			console.log(other_current_following[z][1]);
+			console.log("boi" + other_current_following[z]);
 			if (other_uid == other_current_following[z][1]) {
 				console.log("comparsion successful 3");
 				current_slot_for_following = z;
 			}
 		}
-
+		console.log(current_slot_for_followers);
 		if (!has_been_followed) {
 			//current entry/post
 
@@ -323,7 +324,7 @@ function follow(i) {
 
 			if (key_of_current_for_following === undefined) {
 				console.log(other_current_following);
-
+				console.log(current_slot_for_following);
 				key_of_current_for_following = other_current_following[current_slot_for_following][0];
 				console.log(key_of_current_for_following);
 				//liked before page is loaded

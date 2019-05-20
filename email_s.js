@@ -1,5 +1,6 @@
 // DOM elements
 const guideList = document.querySelector(".guides");
+const onsignupflexer = document.querySelector("#onsignup");
 const loggedOutLinks = document.querySelectorAll(".logged-out");
 const loggedInLinks = document.querySelectorAll(".logged-in");
 
@@ -14,12 +15,14 @@ const setupUI = (user) => {
 		// toggle user UI elements
 		loggedInLinks.forEach((item) => (item.style.display = "block"));
 		loggedOutLinks.forEach((item) => (item.style.display = "none"));
+		onsignupflexer.style.display = "none";
 	} else {
 		// clear account info
 		accountDetails.innerHTML = "";
 		// toggle user elements
 		loggedInLinks.forEach((item) => (item.style.display = "none"));
 		loggedOutLinks.forEach((item) => (item.style.display = "block"));
+		onsignupflexer.style.display = "block";
 	}
 };
 
@@ -41,13 +44,13 @@ signupForm.addEventListener("submit", function(e) {
 	console.log(username);
 
 	console.log(email, password);
-	document.getElementById("verify").innerHTML =
-		"You cannot work until account is verified.Check your email.<br>.After you verify your email,you must logout and re sign in.This is all extra security and for the greater good.";
 
 	// sign up the user
 	auth.createUserWithEmailAndPassword(email, password).then((cred) => {
 		console.log("sending verification");
 		firebase.auth().currentUser.sendEmailVerification();
+		document.getElementById("verify").innerHTML =
+			"You cannot work until account is verified.Check your email.<br>.After you verify your email,you must logout and re sign in.This is all extra security and for the greater good.";
 		//ueser data = auth
 		console.log(firebase.auth().currentUser);
 		global_user = firebase.auth().currentUser;
@@ -111,7 +114,7 @@ function getusername() {
 		console.log(current_user_name);
 	});
 }
-//login
+
 // login
 const loginForm = document.querySelector("#login-form");
 loginForm.addEventListener("submit", (e) => {
@@ -161,6 +164,7 @@ auth.onAuthStateChanged((user) => {
 		google_sign_in_button.style.display = "none";
 		console.log("user logged in: ");
 		allow = true;
+		console.log(global_user);
 		isverified = user.emailVerified;
 		var firebaseheadingref = firebase.database().ref().child("posts");
 		firebaseheadingref.on("value", function(datasnapshot) {
@@ -184,7 +188,6 @@ auth.onAuthStateChanged((user) => {
 		//console.log("user signed out");
 		setupUI();
 		console.log("user logged out");
-		reset();
 	}
 });
 
