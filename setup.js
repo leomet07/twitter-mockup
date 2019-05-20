@@ -104,7 +104,7 @@ function read(datasnapshot) {
 		if (!isverified) {
 			user_add.style.display = "none";
 			document.getElementById("verify").innerHTML =
-				"You cannot 'tweet' until account is verified.Check your email.<br>After you verify your email,you must logout and re sign in.This is all extra security and for the greater good.";
+				"You cannot 'tweet' until account is verified.Check your email,and its spam folder.<br>After you verify your email,you must logout and re sign in.";
 		} else {
 			user_add.style.display = "block";
 		}
@@ -138,16 +138,22 @@ function add(i) {
 		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current_for_followers).set(global_user.uid);
 		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("amount").set(current_likes);
 	} else if (has_liked) {
-		current_likes = current_likes - 1;
-		//.removeValue();
-		console.log(key_of_current_for_followers);
-		if (key_of_current_for_followers === undefined) {
-			key_of_current_for_followers = current_users_liked[current_slot_for_followers][0];
-			//liked before page is loaded
-			//means like must be retrieved in a different way
+		if (!(current_likes <= 0)) {
+			//to prevent the negitive glitch
+			console.log("boi");
+			current_likes = current_likes - 1;
+			//.removeValue();
+			console.log(key_of_current_for_followers);
+			if (key_of_current_for_followers === undefined) {
+				key_of_current_for_followers = current_users_liked[current_slot_for_followers][0];
+				//liked before page is loaded
+				//means like must be retrieved in a different way
+			}
+			firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current_for_followers).remove();
+			firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("amount").set(current_likes);
+		} else {
+			console.log("not boi");
 		}
-		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("users").child(key_of_current_for_followers).remove();
-		firebase.database().ref().child("posts").child(entries[i][0]).child("likes").child("amount").set(current_likes);
 	}
 }
 
