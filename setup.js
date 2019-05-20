@@ -269,72 +269,76 @@ function follow(i) {
 	//once data has been recieved turn listener off
 	//sfirebase.database().ref().child("users").off();
 	let has_been_followed = false;
+	if (!(other_users_follower_amount <= 0) && !(other_users_following_amount <= 0)) {
+		//to prevent the negitive glitch
+		console.log("folow boi");
+		for (let j = 0; j < other_current_followers.length; j++) {
+			//console.log(other_current_followers[j][1]);
+			if (global_user.uid == other_current_followers[j][1]) {
+				console.log("comparsion successful");
+				current_slot_for_followers = j;
+				has_been_followed = true;
+			}
+		}
 
-	for (let j = 0; j < other_current_followers.length; j++) {
-		//console.log(other_current_followers[j][1]);
-		if (global_user.uid == other_current_followers[j][1]) {
-			console.log("comparsion successful");
-			current_slot_for_followers = j;
-			has_been_followed = true;
+		//second for loop only for current slot since follow status has already been determined
+		for (let z = 0; z < other_current_following.length; z++) {
+			console.log(other_current_following[z][1]);
+			if (other_uid == other_current_following[z][1]) {
+				console.log("comparsion successful 3");
+				current_slot_for_following = z;
+			}
+		}
+
+		if (!has_been_followed) {
+			//current entry/post
+
+			//increasing like amount
+
+			other_users_follower_amount = Number(other_users_follower_amount) + 1;
+			other_users_following_amount = Number(other_users_following_amount) + 1;
+
+			//console.log(other_uid);
+			firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("amount").set(other_users_follower_amount);
+			firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("amount").set(other_users_following_amount);
+
+			key_of_current_for_followers = firebase.database().ref().child("users").child(other_uid).child("likes").child("users").push().getKey();
+			firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("follow_users").child(key_of_current_for_followers).set(global_user.uid);
+
+			key_of_current_for_following = firebase.database().ref().child("users").child(global_user.uid).child("likes").child("users").push().getKey();
+			firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_followers).set(other_uid);
+
+			console.log("follow completed");
+		} else if (has_been_followed) {
+			other_users_follower_amount = Number(other_users_follower_amount) - 1;
+			other_users_following_amount = Number(other_users_following_amount) - 1;
+			//console.log(other_users_follower_amount, other_users_following_amount);
+			//.removeValue();
+			//console.log(key_of_current_for_followers);
+			if (key_of_current_for_followers === undefined) {
+				key_of_current_for_followers = other_current_followers[current_slot_for_followers][0];
+				//liked before page is loaded
+				//means like must be retrieved in a different way
+			}
+
+			if (key_of_current_for_following === undefined) {
+				console.log(other_current_following);
+
+				key_of_current_for_following = other_current_following[current_slot_for_following][0];
+				console.log(key_of_current_for_following);
+				//liked before page is loaded
+				//means like must be retrieved in a different way
+			}
+			//comes before
+			firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("amount").set(other_users_following_amount);
+			firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("amount").set(other_users_follower_amount);
+			firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("follow_users").child(key_of_current_for_followers).remove();
+
+			firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_following).remove();
+			console.log("unfollow completed");
 		}
 	}
 
-	//second for loop only for current slot since follow status has already been determined
-	for (let z = 0; z < other_current_following.length; z++) {
-		console.log(other_current_following[z][1]);
-		if (other_uid == other_current_following[z][1]) {
-			console.log("comparsion successful 3");
-			current_slot_for_following = z;
-		}
-	}
-
-	if (!has_been_followed) {
-		//current entry/post
-
-		//increasing like amount
-
-		other_users_follower_amount = Number(other_users_follower_amount) + 1;
-		other_users_following_amount = Number(other_users_following_amount) + 1;
-
-		//console.log(other_uid);
-		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("amount").set(other_users_follower_amount);
-		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("amount").set(other_users_following_amount);
-
-		key_of_current_for_followers = firebase.database().ref().child("users").child(other_uid).child("likes").child("users").push().getKey();
-		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("follow_users").child(key_of_current_for_followers).set(global_user.uid);
-
-		key_of_current_for_following = firebase.database().ref().child("users").child(global_user.uid).child("likes").child("users").push().getKey();
-		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_followers).set(other_uid);
-
-		console.log("follow completed");
-	} else if (has_been_followed) {
-		other_users_follower_amount = Number(other_users_follower_amount) - 1;
-		other_users_following_amount = Number(other_users_following_amount) - 1;
-		//console.log(other_users_follower_amount, other_users_following_amount);
-		//.removeValue();
-		//console.log(key_of_current_for_followers);
-		if (key_of_current_for_followers === undefined) {
-			key_of_current_for_followers = other_current_followers[current_slot_for_followers][0];
-			//liked before page is loaded
-			//means like must be retrieved in a different way
-		}
-
-		if (key_of_current_for_following === undefined) {
-			console.log(other_current_following);
-
-			key_of_current_for_following = other_current_following[current_slot_for_following][0];
-			console.log(key_of_current_for_following);
-			//liked before page is loaded
-			//means like must be retrieved in a different way
-		}
-		//comes before
-		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("amount").set(other_users_following_amount);
-		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("amount").set(other_users_follower_amount);
-		firebase.database().ref().child("users").child(other_uid).child("follow").child("followers").child("follow_users").child(key_of_current_for_followers).remove();
-
-		firebase.database().ref().child("users").child(global_user.uid).child("follow").child("following").child("follow_users").child(key_of_current_for_following).remove();
-		console.log("unfollow completed");
-	}
 	//once is used to not make another event lister
 	firebase.database().ref().child("posts").on("value", function(datasnapshot) {
 		read(datasnapshot);
