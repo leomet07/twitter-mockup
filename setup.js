@@ -13,58 +13,39 @@ var current_user_name;
 var entries;
 var count = 0;
 var tweet_container = document.getElementById("tweet_container");
+
+const selectElement = document.querySelector("#veiwtype");
+
+selectElement.addEventListener("change", function(event) {
+	//once change happens read again
+	var firebaseheadingref = firebase.database().ref().child("posts");
+	firebaseheadingref.on("value", function(datasnapshot) {
+		console.log(datasnapshot.val());
+		read(datasnapshot);
+	});
+});
+
 function read(datasnapshot) {
 	console.log("isverified: " + isverified);
 	//reading is allowed when not verified
 	if (allow) {
-		entries = Object.entries(datasnapshot.val());
-		for (i = 0; i < entries.length; i++) {
-			var current_entry = entries[i];
+		var e = document.getElementById("veiwtype");
+		var strUser = e.options[e.selectedIndex].value;
+		console.log("type " + strUser);
+		if (strUser == 1) {
+			console.log("veiw all");
+			entries = Object.entries(datasnapshot.val());
+			for (i = 0; i < entries.length; i++) {
+				var current_entry = entries[i];
 
-			for (j = 0; j < current_entry.length; j++) {
-				let tweettobedisplayed = current_entry[j];
+				for (j = 0; j < current_entry.length; j++) {
+					let tweettobedisplayed = current_entry[j];
 
-				if (i == 0) {
-					console.log("here");
+					if (i == 0) {
+						console.log("here");
 
-					if (j != 0) {
-						tweet_container.innerHTML =
-							`<div class = "tweet">` +
-							`<p class = "username">@` +
-							tweettobedisplayed.user_name +
-							`</p>` +
-							`<p class = "title">` +
-							tweettobedisplayed.title +
-							`</p>` +
-							`<p class = "desc">` +
-							tweettobedisplayed.desc +
-							`</p>` +
-							`<p class = "likes">Likes:` +
-							tweettobedisplayed.likes.amount +
-							`</p>` +
-							`<p class = "followers_amount">Followers:` +
-							snapshot[tweettobedisplayed.uid].follow.followers.amount +
-							`</p>` +
-							`<p class = "followers_amount">Following:` +
-							snapshot[tweettobedisplayed.uid].follow.following.amount +
-							`</p>` +
-							`<button class = 'followbutton' onclick = "follow(` +
-							`'` +
-							i.toString() +
-							`'` +
-							`)">Follow</button>` +
-							`<button class = 'likebutton' onclick = "add(` +
-							`'` +
-							i.toString() +
-							`'` +
-							`)">Like</button>` +
-							`</div>`;
-					}
-				} else if (i != 0) {
-					if (j != 0) {
 						if (j != 0) {
-							console.log(snapshot[tweettobedisplayed.uid].follow.following.amount);
-							tweet_container.innerHTML +=
+							tweet_container.innerHTML =
 								`<div class = "tweet">` +
 								`<p class = "username">@` +
 								tweettobedisplayed.user_name +
@@ -96,10 +77,140 @@ function read(datasnapshot) {
 								`)">Like</button>` +
 								`</div>`;
 						}
+					} else if (i != 0) {
+						if (j != 0) {
+							if (j != 0) {
+								console.log(snapshot[tweettobedisplayed.uid].follow.following.amount);
+								tweet_container.innerHTML +=
+									`<div class = "tweet">` +
+									`<p class = "username">@` +
+									tweettobedisplayed.user_name +
+									`</p>` +
+									`<p class = "title">` +
+									tweettobedisplayed.title +
+									`</p>` +
+									`<p class = "desc">` +
+									tweettobedisplayed.desc +
+									`</p>` +
+									`<p class = "likes">Likes:` +
+									tweettobedisplayed.likes.amount +
+									`</p>` +
+									`<p class = "followers_amount">Followers:` +
+									snapshot[tweettobedisplayed.uid].follow.followers.amount +
+									`</p>` +
+									`<p class = "followers_amount">Following:` +
+									snapshot[tweettobedisplayed.uid].follow.following.amount +
+									`</p>` +
+									`<button class = 'followbutton' onclick = "follow(` +
+									`'` +
+									i.toString() +
+									`'` +
+									`)">Follow</button>` +
+									`<button class = 'likebutton' onclick = "add(` +
+									`'` +
+									i.toString() +
+									`'` +
+									`)">Like</button>` +
+									`</div>`;
+							}
+						}
+					}
+				}
+			}
+		} else if (strUser == 2) {
+			tweet_container.innerHTML = "";
+			console.log("veiw only followed");
+			//gettin people who user follow
+			let current_followers = Object.entries(snapshot[global_user.uid].follow.following.follow_users);
+			console.log(current_followers);
+			entries = Object.entries(datasnapshot.val());
+			for (i = 0; i < entries.length; i++) {
+				var current_entry = entries[i];
+
+				for (j = 0; j < current_entry.length; j++) {
+					let tweettobedisplayed = current_entry[j];
+					for (a = 0; a < current_followers.length; a++) {
+						//console.log(current_followers[a][1]);
+						if (current_followers[a][1] == tweettobedisplayed.uid) {
+							//console.log("here");
+							if (j != 0) {
+								if (i == 0) {
+									console.log("here");
+
+									tweet_container.innerHTML =
+										`<div class = "tweet">` +
+										`<p class = "username">@` +
+										tweettobedisplayed.user_name +
+										`</p>` +
+										`<p class = "title">` +
+										tweettobedisplayed.title +
+										`</p>` +
+										`<p class = "desc">` +
+										tweettobedisplayed.desc +
+										`</p>` +
+										`<p class = "likes">Likes:` +
+										tweettobedisplayed.likes.amount +
+										`</p>` +
+										`<p class = "followers_amount">Followers:` +
+										snapshot[tweettobedisplayed.uid].follow.followers.amount +
+										`</p>` +
+										`<p class = "followers_amount">Following:` +
+										snapshot[tweettobedisplayed.uid].follow.following.amount +
+										`</p>` +
+										`<button class = 'followbutton' onclick = "follow(` +
+										`'` +
+										i.toString() +
+										`'` +
+										`)">Follow</button>` +
+										`<button class = 'likebutton' onclick = "add(` +
+										`'` +
+										i.toString() +
+										`'` +
+										`)">Like</button>` +
+										`</div>`;
+								} else if (i != 0) {
+									console.log("here 2");
+									console.log(tweettobedisplayed);
+									//console.log(snapshot[tweettobedisplayed.uid].follow.following.amount);
+									tweet_container.innerHTML +=
+										`<div class = "tweet">` +
+										`<p class = "username">@` +
+										tweettobedisplayed.user_name +
+										`</p>` +
+										`<p class = "title">` +
+										tweettobedisplayed.title +
+										`</p>` +
+										`<p class = "desc">` +
+										tweettobedisplayed.desc +
+										`</p>` +
+										`<p class = "likes">Likes:` +
+										tweettobedisplayed.likes.amount +
+										`</p>` +
+										`<p class = "followers_amount">Followers:` +
+										snapshot[tweettobedisplayed.uid].follow.followers.amount +
+										`</p>` +
+										`<p class = "followers_amount">Following:` +
+										snapshot[tweettobedisplayed.uid].follow.following.amount +
+										`</p>` +
+										`<button class = 'followbutton' onclick = "follow(` +
+										`'` +
+										i.toString() +
+										`'` +
+										`)">Follow</button>` +
+										`<button class = 'likebutton' onclick = "add(` +
+										`'` +
+										i.toString() +
+										`'` +
+										`)">Like</button>` +
+										`</div>`;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
+
 		console.log("hereremove here");
 		if (!isverified) {
 			user_add.style.display = "none";

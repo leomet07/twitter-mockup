@@ -267,3 +267,7 @@ button {
 .logged-in {
 	display: none;
 }
+#veiwtype {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
