@@ -460,6 +460,10 @@ function follow(i) {
 	firebase.database().ref().child("users").on("value", function(datasnapshot) {
 		//console.log(datasnapshot.val());
 		snapshot = datasnapshot.val();
+		firebase.database().ref().child("posts").on("value", function(datasnapshot2) {
+			read(datasnapshot2);
+			//listener is separate so it doesnt affect anything else
+		});
 		//console.log(snapshot);
 		//listener is separate so it doesnt affect anything else
 	});
