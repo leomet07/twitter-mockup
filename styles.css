@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
 
 body {
-	font-family: 'Roboto', sans-serif;
-	background-color: #00affe;
-
-	margin-left: 3%;
-	margin-right: 3%;
-
+	font-family: 'Noto Sans', sans-serif;
+	background-color: #4bbbe9;
+	background-image: url("bg.png");
+	background-repeat: repeat;
 	font-weight: 300;
 
 	height: 100%;
+}
+#content {
+	margin-left: 3%;
+	margin-right: 3%;
 }
 .small-link {
 	font-size: 17px;
@@ -21,6 +23,11 @@ body {
 }
 #heading {
 	text-align: left;
+}
+#top {
+	padding-top: 10px;
+	margin-left: 0px;
+	padding-left: 3%;
 }
 h3 {
 	font-size: 18px;
@@ -52,6 +59,7 @@ h1 {
 }
 #logo {
 	height: 35px;
+	width: 35px;
 }
 h2 {
 	font-size: 28px;
@@ -186,10 +194,17 @@ button {
 	background-color: white;
 	color: #00affe;
 	border: 1px solid black;
-	height: 280px;
-	width: 280px;
+	height: 320px;
+	width: 320px;
 	border-radius: 5px;
 	overflow-y: scroll;
+	background-color: #c4fff6;
+}
+.tweet::-webkit-scrollbar {
+	width: 0 !important;
+}
+.tweet {
+	-ms-overflow-style: none;
 }
 .tweet:hover {
 }
@@ -222,27 +237,24 @@ button {
 	transition-duration: 0.5s;
 }
 #google-sign-in:hover {
-	background-color: #00ff00;
+	background-color: #00fe50;
 }
 #google-sign-in {
-	background-color: #00ff00;
 }
 #tooglesignup {
 	margin: 0 auto;
 	margin-bottom: 3px;
 	font-size: 30px;
-	border-color: #595959;
-	background-color: #ff9933;
+	border-color: black;
 }
 #togglelogin {
 	margin: 0 auto;
 	font-size: 32px;
-	border-color: #595959;
-	background-color: #ff9933;
+	border-color: black;
 }
 #togglelogin:hover,
 #tooglesignup:hover {
-	background-color: #ff9999;
+	background-color: #2600fe;
 }
 
 #verify {

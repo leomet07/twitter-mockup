@@ -166,8 +166,17 @@ auth.onAuthStateChanged((user) => {
 		allow = true;
 		console.log(global_user);
 		isverified = user.emailVerified;
+		firebase.database().ref().child("users").on("value", function(datasnapshot) {
+			//console.log(datasnapshot.val());
+			snapshot = datasnapshot.val();
+			console.log(snapshot);
+			//listener is separate so it doesnt affect anything else
+		});
+		//fixes first time read y having the even listener turned on twice
+
 		var firebaseheadingref = firebase.database().ref().child("posts");
 		firebaseheadingref.on("value", function(datasnapshot) {
+			console.log(datasnapshot.val());
 			read(datasnapshot);
 		});
 
