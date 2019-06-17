@@ -514,3 +514,12 @@ window.onload = function() {
 		});
 	}
 };
+
+//shwoing login form if url specifies it
+window.onload = function() {
+	if (document.location.href.indexOf("showdiv=yes") > 0) {
+		let temptogglelogin = document.querySelector("#togglelogin");
+		let panel = temptogglelogin.nextElementSibling;
+		panel.style.display = "block";
+	}
+};
