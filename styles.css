@@ -1,16 +1,70 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
 
 body {
-	font-family: 'Roboto', sans-serif;
-	background-color: #ffc194;
-	margin-left: 1%;
-}
+	font-family: 'Noto Sans', sans-serif;
+	background-color: #4bbbe9;
 
-.h1 {
-	font-size: 35px;
+	background-repeat: repeat;
+	font-weight: 300;
+
+	height: 100%;
 }
-.h2 {
+#content {
+	margin-left: 3%;
+	margin-right: 3%;
+}
+.small-link {
+	font-size: 17px;
+}
+#join {
+	margin-top: 60px;
+	text-align: center;
+	font-size: 22px;
+}
+#heading {
+	text-align: left;
+}
+#top {
+	padding-top: 10px;
+	margin-left: 0px;
+	padding-left: 3%;
+}
+h3 {
+	font-size: 18px;
+}
+#reasons {
+	list-style-type: none;
+}
+#onsignup {
+	width: 500px;
+	margin: 0 auto;
+}
+#megaphone {
+	width: 30px;
+}
+#footstep {
+	transform: rotate(334deg);
+	height: 35px;
+	width: 35px;
+}
+footer {
+	Width: 100%;
+	bottom: 0;
+	margin-bottom: 10px;
+	position: relative;
+}
+h1 {
+	font-size: 40px;
+	font-weight: 300;
+}
+#logo {
+	height: 35px;
+	width: 35px;
+}
+h2 {
 	font-size: 28px;
+	font-weight: 300;
+	text-align: center;
 }
 .user_input {
 	text-align: center;
@@ -22,35 +76,46 @@ body {
 	font-size: 25px;
 	outline-width: 0;
 	margin-bottom: 10px;
-	border-radius: 3px;
+	border-radius: 7px;
 	background-color: #e5f2ff;
 }
 ::placeholder {
 	color: black;
 	opacity: 1; /* Firefox */
 }
-
 :-ms-input-placeholder {
 	/* Internet Explorer 10-11 */
 	color: black;
 }
-
 ::-ms-input-placeholder {
 	/* Microsoft Edge */
 	color: black;
 }
+
 #user_add {
 	display: none;
 }
+
 #user_read {
 	display: none;
 	overflow: scroll;
-	height: 400px;
+	max-height: 400px;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	margin-bottom: 1%;
+	border-radius: 0px;
 }
-.button {
+#user_read::-webkit-scrollbar {
+	width: 0 !important;
+}
+#user_read {
+	-ms-overflow-style: none;
+}
+
+#tweet_container {
+	margin-left: 5px;
+}
+button {
 	border: 1px solid black;
 	font-size: 25px;
 	background-color: #5499c7;
@@ -58,16 +123,19 @@ body {
 	margin-bottom: 2px;
 }
 
-.likebutton {
+.likebutton,
+.followbutton {
 	border: 1px solid black;
-	font-size: 10px;
+	font-size: 15px;
 	background-color: #5499c7;
 	border-radius: 2px;
+	margin-left: 5px;
 }
 #submit {
 	margin-top: 10px;
 	margin-bottom: 5px;
 	transition-duration: 200ms;
+	background-color: #00affe;
 }
 
 #submit:hover {
@@ -75,22 +143,131 @@ body {
 }
 .button:focus {
 }
-#heading {
-	text-align: center;
-}
 
 #text_boxes {
 	text-align: center;
 }
 /* Style the accordion panel. Note: hidden by default */
 .panel {
-	padding: 0 15px;
-	background-color: #dc7633;
 	display: none;
 	overflow: hidden;
 	float: inherit;
+	margin: 0 auto;
 }
 
 nav {
+	color: black;
 	border: 0.5px solid black;
+	background-color: #00affe !important;
+	border-radius: 3px;
+}
+
+a {
+	color: black;
+}
+.input-field {
+	height: 40px;
+	width: 50%;
+	font-size: 18px;
+	padding-left: 8px;
+	margin-bottom: 4px;
+	border: 1px solid rgb(22, 22, 22);
+	border-radius: 4px;
+}
+#status {
+	color: black;
+	font-size: 18px;
+}
+
+button {
+	border-radius: 3px;
+	background-color: #00affe;
+}
+#tweet_container {
+}
+.tweet {
+	float: left;
+	margin-top: 12px;
+	margin-right: 12px;
+	margin-bottom: 12px;
+	margin-left: 12px;
+	background-color: white;
+	color: #00affe;
+	border: 1px solid black;
+	height: 320px;
+	width: 320px;
+	border-radius: 5px;
+	overflow-y: scroll;
+	background-color: #c4fff6;
+}
+.tweet::-webkit-scrollbar {
+	width: 0 !important;
+}
+.tweet {
+	-ms-overflow-style: none;
+}
+.tweet:hover {
+}
+.username {
+	font-size: 20px;
+	text-align: center;
+}
+
+.title {
+	text-align: center;
+	font-size: 20px;
+}
+
+.likes {
+	text-align: center;
+}
+
+.desc {
+	margin-left: 8px;
+}
+
+.followers_amount {
+	margin-left: 8px;
+}
+
+.accordion,
+#google-sign-in {
+	margin: 0 auto;
+	margin-bottom: 10px;
+	transition-duration: 0.5s;
+}
+#google-sign-in:hover {
+	background-color: #00fe50;
+}
+#google-sign-in {
+}
+#tooglesignup {
+	margin: 0 auto;
+	margin-bottom: 3px;
+	font-size: 30px;
+	border-color: black;
+}
+#togglelogin {
+	margin: 0 auto;
+	font-size: 32px;
+	border-color: black;
+}
+#togglelogin:hover,
+#tooglesignup:hover {
+	background-color: #2600fe;
+}
+
+#verify {
+	font-size: 23px;
+}
+
+.logged-out {
+	text-align: center;
+}
+.logged-in {
+	display: none;
+}
+#veiwtype {
+	margin-bottom: 10px;
+	margin-top: 10px;
 }

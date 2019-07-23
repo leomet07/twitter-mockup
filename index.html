@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Twitter mockup</title>
+        <title>A better twitter.</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="favicon.png" />
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="other.css">
         <link rel="stylesheet" href='styles.css'>
     </head>
     <body>
-        <h1 class = 'h1' id = 'heading'>Twitter Mockup</h1>
-        <h2 class = 'h2'>Make sure pop ups are not blocked</h2>
-        <button class = 'button'id="google-sign-in" onclick="google_signin()">Sign in with google</button>
-        <div id="user_read">
-            <p id="fireheading"></p>
-            <ol id = "verify">
-            </ol>
+        
+        <div id = "top">
+        <h1 class = 'h1' id = 'heading'><img id = "logo" src = "favicon.png">Twitter Mockup <a href = "https://github.com/leomet07" id = "" class = "small-link">More work</a> <a href = "legal/index.html" id = "legal" class = "small-link">Legal</a></h1>
+        
         </div>
+        <div id = "content">
+        <div id = "onsignup">
+            <h2>A better twitter.</h2>
+            <ul id = "reasons">
+            <li><h3 class = "reasons"><img id = "footstep" src = "footsteps.png" class =  "miniimg"> Follow and listen to people of intrest.</h3></li>
+            <li><h3 class = "reasons"><img id = "megaphone" src = "megaphone.png" class = "miniimg"> Have a voice today.</h3></li>
+        </ul>
+        <h3 id = "join">Join a community today.</h3>
+        </div>
+        
+        <button  id="google-sign-in" onclick="google_signin()">Use with google </button>
+        
+        <div id="user_read">
+            <select id="veiwtype">
+                    
+                <option value="2" >See only followed</option>
+                <option value="1">See all</option>
+                
+                
+                
+                        
+            </select>
+            <div id = "tweet_container">
+            </div>
+        </div>
+        <p id = "verify">
+        </p>
         <div id="user_add">
             <div id  = 'text_boxes'>
                 <form action="#" autocomplete="off">
@@ -31,77 +54,72 @@
             <button id="submit" class= 'button' onclick="submitclick()">Submit</button>
         </div>
         <div id = 'external'>
-            <!-- NAVBAR -->
-            <nav class="z-depth-0 grey lighten-4">
-                <div class="nav-wrapper container">
-                    <a href="#" class="brand-logo">
-                    </a>
-                    <ul id="nav-mobile">
-                        <li class="logged-in">
-                            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
-                        </li>
-                        <li class="logged-in">
-                            <a href="#" class="grey-text" id="logout">Logout</a>
-                        </li>
-                        <li class="logged-out">
-                            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
-                        </li>
-                        <li class="logged-out">
-                            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
-                        </li>
-                        </span>
-                    </ul>
-                </div>
-            </nav>
             <!-- SIGN UP MODAL -->
-            <div id="modal-signup" class="modal">
-                <div class="modal-content">
-                    <h4>Sign up</h4>
-                    <br />
-                    <form id="signup-form">
-                        <div class="input-field">
-                            <input type="email" id="signup-email" required />
-                            <label for="signup-email">Email address</label>
-                        </div>
-                        <div class="input-field">
-                            <input type="password" id="signup-password" required />
-                            <label for="signup-password">Choose password</label>
-                        </div>
-                        <div class="input-field">
-                            <input type="text" id="signup-username" required />
-                            <label for="signup-username">Username</label>
-                        </div>
-                        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
-                    </form>
+            
+            <div class = "logged-out">
+                <button class = 'accordion logged-out' id = "tooglesignup">Sign up with email and password</button>
+                <div id="modal-signup" class="panel">
+                    <div class="modal-content">
+                        <h4>Sign up</h4>
+                        <br />
+                        <form id="signup-form" autocomplete="off">
+                            <div class="">
+                                <input class = "input-field" type="email" id="signup-email" required />
+                                <label for="signup-email">Email address</label>
+                            </div>
+                            <div class="">
+                                <input class = "input-field" type="password" id="signup-password" required />
+                                <label for="signup-password">Choose password</label>
+                            </div>
+                            <div class="">
+                                <input type="text" class = "input-field" id="signup-username" required />
+                                <label for="signup-username">Username</label>
+                                <p id = "status"></p>
+                            </div>
+                            <button class="btn yellow darken-2 z-depth-0">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- LOGIN MODAL -->
-            <div id="modal-login" class="modal">
-                <div class="modal-content">
-                    <h4>Login</h4>
-                    <br />
-                    <form id="login-form">
-                        <div class="input-field">
-                            <input type="email" id="login-email" required />
-                            <label for="login-email">Email address</label>
-                        </div>
-                        <div class="input-field">
-                            <input type="password" id="login-password" required />
-                            <label for="login-password">Your password</label>
-                        </div>
-                        <button class="btn yellow darken-2 z-depth-0">Login</button>
-                    </form>
+            <div class = "logged-out">
+                <button class = 'accordion logged-out' id = "togglelogin">Login with email and password</button>
+                <div id="modal-login" class="panel">
+                    <div class="modal-content">
+                        <h4>Login</h4>
+                        <br />
+                        <form id="login-form">
+                            <div class="">
+                                <input class = "input-field" type="email" id="login-email" required />
+                                <label for="login-email">Email address</label>
+                            </div>
+                            <div class="">
+                                <input class = "input-field" type="password" id="login-password" required />
+                                <label for="login-password">Your password</label>
+                            </div>
+                            <button class="">Submit</button>
+                        </form>
+                        <button class="" onclick="resetpassword()">Forgot password?</button>
+                    </div>
                 </div>
             </div>
             <!-- ACCOUNT MODAL -->
-            <div id="modal-account" class="modal">
-                <div class="modal-content center-align">
-                    <h4>Account details</h4>
-                    <br />
-                    <div class="account-details"></div>
+            <div class = "logged-in">
+                <button id = "acct" class = 'accordion '>Account details</button>
+                <div id="modal-account" class="panel">
+                    <div class="modal-content center-align">
+                        <h4>Account details</h4>
+                        <br />
+                        <div class="account-details"></div>
+                    </div>
                 </div>
             </div>
+            <button id="logout" class="logged-in">Logout</button>
         </div>
+        </div>
+        
+        
+            
         <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
         <script>
             // Initialize Firebase
@@ -126,8 +144,7 @@
         <script src = "email_s.js"></script>
         <script src = "setup.js"></script>
         <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+        
         <noscript>This website requieres js.</noscript>
     </body>
 </html>

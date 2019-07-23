@@ -3,9 +3,11 @@
 var allow = false;
 var fireheading = document.getElementById("fireheading");
 var isverified;
-var global_user;
+
 //making current user global
-var save_currentUser;
+var global_user;
+var checksnapshot;
+
 function google_signin() {
 	var provider = new firebase.auth.GoogleAuthProvider();
 	//provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -30,18 +32,33 @@ function google_signin() {
 			var user = firebase.auth().currentUser;
 			global_user = user;
 			console.log(user);
-			console.log(user.displayName);
 
 			//mmaking google users have a email as their username
 			current_user_name = user.email;
 			//adding a username to userlist
 			console.log("hi");
-			firebase.database().ref().child("users").child(global_user.uid).set({
-				user_name: current_user_name
+			checksnapshot = "hi";
+			var firebaseheadingref = firebase.database().ref().child("users");
+			firebaseheadingref.on("value", function(datasnapshot) {
+				checksnapshot = datasnapshot.val();
+				console.log(checksnapshot);
 			});
+			//making a new user everytime
+			if (checksnapshot[global_user.uid] == null) {
+				console.log("add");
+				firebase.database().ref().child("users").child(global_user.uid).set({
+					user_name: current_user_name,
+					follow: { followers: { amount: 0, follow_users: { placeholder: "placeholder" } }, following: { amount: 0, follow_users: { placeholder: "placeholder" } } }
+				});
+			}
+
+			//adding email to separate email collection
+			firebase.database().ref().child("usernames").child(global_user.uid).set(current_user_name);
+
 			//a global var bc otherwise it connot be read from other functions.
 			window.name = user.displayName;
 			isverified = user.emailVerified;
+
 			var firebaseheadingref = firebase.database().ref().child("posts");
 			firebaseheadingref.on("value", function(datasnapshot) {
 				read(datasnapshot);
@@ -61,38 +78,4 @@ function google_signin() {
 			console.log(errorCode);
 			// ...
 		});
-}
-var description = document.getElementById("description");
-var title = document.getElementById("title");
-var submitbtn = document.getElementById("submit");
-
-function submitclick() {
-	//writing is not allowed when not verified
-	if (allow && isverified) {
-		//adding data
-		var firebaseRef = firebase.database().ref().child("posts");
-		var messagetext = description.value;
-		var titletext = title.value;
-
-		//since writing is only when u r signed in,you can use the uid to access the username
-		function getusername() {}
-
-		console.log("here");
-		//making a new child everytime
-		firebaseRef.push().set({
-			user_name: current_user_name,
-			name: global_user.displayName,
-			title: titletext,
-			desc: messagetext,
-			uid: global_user.uid,
-			likes: { amount: 0, users: { placeholder: "placeholderid" } }
-		});
-
-		document.getElementById("title").value = "";
-		document.getElementById("description").value = "";
-		//uid is posted to add user link
-
-		//resseting the values
-		//titletext = "";
-	}
 }
