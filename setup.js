@@ -493,7 +493,6 @@ window.onload = function() {
 
 			//once cllicked/selected remove option/other button
 			if (this.id == "togglelogin") {
-				console.log("togglelogin");
 				//if paneil is shown AFTER click remove other btns
 				if (panel.style.display == "block") {
 					//remove other btns
